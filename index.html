@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+         <div class="container" id="bodyArea" >
+         <div class="cart">
+            <div  class="col-md-12 col-lg-10 mx-auto">
+               <div id="remove1" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div  class="input-group number-spinner">
+                           <button id="phoneMinusButton" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input  id="phoneCount" type="text" class="form-control text-center" value="1" readonly>
+                           <button id="phonePlusButton" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="iphonePrice">1278</span></h5>
+                        <img src="images/remove.png" alt="" id="deduct1" class="remove-item" >
+                     </div>
+                  </div>
+               </div>
+
+               <div id="remove2" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div  class="input-group number-spinner">
+                           <button id="caseMinusButton" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="caseCount" type="text" class="form-control text-center" value="1" readonly>
+                           <button id="casePlusButton" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="casePrice" >59</span></h5>
+                        <img src="images/remove.png" alt="" id ="deduct2"class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subValue">1,278</span></h5>
+                        <h5>$ <span id="totalTax">0</span></h5>
+                        <h5>$ <span id="finalTotal">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out" id="checkOut">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div id="transaction-area">
+      <h1 >Your Order has been Proceed</h1>
+   </div>
+   <script>
+     
+     
+         
+     
+     //iphone plus button event handler
+    const phonePrice = document.getElementById('iphonePrice').innerText;
+    const phonePriceNumber = parseFloat(phonePrice);
+    
+   
+    const  btnPlusPhone = document.getElementById('phonePlusButton');
+    btnPlusPhone.addEventListener('click', function(event){
+    const itemInput = document.getElementById('phoneCount').value;
+    const itemNumber = parseFloat(itemInput);
+    const totalItem = itemNumber + 1;
+    // addCount('phoneCount');
+    updatePhonePrice(totalItem,phonePriceNumber);
+    updateSpanText();
+    
+    })
+
+   //iphone minus button event handler
+    const btnMinusPhone = document.getElementById('phoneMinusButton');
+    btnMinusPhone.addEventListener('click', function(event){
+    const itemInput = document.getElementById('phoneCount').value;
+    const  itemNumber = parseFloat(itemInput);
+    const totalItem =  itemNumber -1;
+        if(totalItem>=0){
+            document.getElementById('phoneCount').value = totalItem;
+                //console.log(totalItem);
+             }
+            else{
+                 return 0;
+             }
+    updatePhonePrice(totalItem,phonePriceNumber);
+    updateSpanText();
+    })
+
+
+    //iphone case plus button event handler
+
+    const phoneCasePrice = document.getElementById('casePrice').innerText;
+    const phoneCasePriceNumber = parseFloat(phoneCasePrice);
+
+
+    const btnPlusCase = document.getElementById('casePlusButton');
+    btnPlusCase.addEventListener('click', function(event){
+        
+    const itemInput = document.getElementById('caseCount').value;
+    const itemNumber = parseFloat(itemInput);
+    const totalItem = itemNumber + 1;
+        
+        //addCount('caseCount');
+        updateCasePrice(totalItem,phoneCasePriceNumber);
+        updateSpanText();
+    
+    })
+    
+    //iphone case minus button event handler
+
+     const btnMinusCase = document.getElementById('caseMinusButton');
+     btnMinusCase.addEventListener('click', function(event){
+        
+    const itemInput = document.getElementById('caseCount').value;
+    const  itemNumber = parseFloat(itemInput);
+    const totalItem =  itemNumber -1;
+        if(totalItem>=0){
+            document.getElementById('caseCount').value = totalItem;
+               
+             }
+            else{
+                 return 0;
+             }
+        
+        //deductCount('caseCount');
+        updateCasePrice(totalItem,phoneCasePriceNumber);
+        updateSpanText();
+
+     })
+
+
+
+
+   //All functions
+
+    function updatePhonePrice(totalItem,phonePriceNumber){
+    
+        const phoneTotalPrice = totalItem * phonePriceNumber;
+        document.getElementById('iphonePrice').innerText = phoneTotalPrice;
+        document.getElementById('phoneCount').value = totalItem;
+    }
+
+    function updateCasePrice(totalItem,phoneCasePriceNumber){
+        const caseTotalPrice = totalItem * phoneCasePriceNumber;
+        document.getElementById('casePrice').innerText = caseTotalPrice;
+        document.getElementById('caseCount').value = totalItem;
+    }
+
+    function updateSpanText(){
+        const iphoneTotalPrice = parseFloat(document.getElementById('iphonePrice').innerText);
+        const caseTotalPrice = parseFloat(document.getElementById('casePrice').innerText);
+        const subTotal = iphoneTotalPrice + caseTotalPrice
+        document.getElementById('subValue').innerText = subTotal;
+        const tax = subTotal * 0.15;
+        document.getElementById('totalTax').innerText =  Math.round(tax);
+        const total = subTotal + tax;
+        document.getElementById('finalTotal').innerText =  Math.round(total);
+    }
+
+      const btnCheck = document.getElementById("checkOut");
+          btnCheck.addEventListener("click",function(){
+                             
+             document.getElementById("bodyArea").style.display="none";
+                   document.getElementById("transaction-area").style.display="block"
+                     
+                })
+
+                //Delete
+                const btnDelete = document.getElementById("deduct1");
+                btnDelete.addEventListener("click",function(){
+                const areaRemove = document.getElementById("remove1");
+                areaRemove.style.display = "none";
+                })
+
+                const btnDelete1 = document.getElementById("deduct2");
+                btnDelete1.addEventListener("click", function(){
+                  const areaRemove1 = document.getElementById("remove2");
+                  areaRemove1.style.display = "none";
+
+                })
+
+                //Disable Input
+               //  function disableInput() {
+               //  document.getElementById("phoneCount").disabled = true;
+               // }
+        //   const deductItem =  itemNumber -1;
+        //   if(deductItem<1){
+        //     deductItem--;
+        //  }
+</script>
+</body>
+
+</html>
+
+
